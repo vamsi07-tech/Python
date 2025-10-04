@@ -1,0 +1,91 @@
+1. String
+
+A string is a sequence of characters (letters, numbers, or symbols).
+
+Defined inside single quotes ' ', double quotes " ", or triple quotes ''' '''.
+
+Strings are immutable → once created, you cannot change them directly.
+
+Example:
+# String creation
+name = "Vamsi"
+
+# Indexing
+print(name[0])   # V
+print(name[-1])  # i
+
+# Slicing
+print(name[1:4])  # 'ams'
+
+# Strings are immutable
+# name[0] = "X"   # ❌ ERROR: can't modify directly
+
+# But you can create a new string
+new_name = "X" + name[1:]
+print(new_name)  # Xamsi
+
+
+✔ Best for text data.
+===================================================================================
+
+2. List
+
+A list is a collection of ordered and mutable elements.
+
+Defined using square brackets [ ].
+
+Elements can be of mixed types (numbers, strings, other lists, etc.).
+
+Supports many operations like append(), remove(), sort(), etc.
+
+Example:
+# List creation
+fruits = ["apple", "banana", "cherry"]
+
+# Indexing & slicing
+print(fruits[0])     # apple
+print(fruits[1:])    # ['banana', 'cherry']
+
+# Lists are mutable
+fruits[1] = "mango"
+print(fruits)        # ['apple', 'mango', 'cherry']
+
+# Adding and removing
+fruits.append("orange")
+print(fruits)        # ['apple', 'mango', 'cherry', 'orange']
+
+fruits.remove("mango")
+print(fruits)        # ['apple', 'cherry', 'orange']
+
+
+✔ Best for dynamic collections that may need changes.
+==================================================================================
+3. Tuple
+
+A tuple is like a list, but immutable (cannot be modified after creation).
+
+Defined using parentheses ( ).
+
+Used when you want to ensure data cannot be changed.
+
+Example:
+# Tuple creation
+point = (10, 20)
+
+# Indexing & slicing
+print(point[0])   # 10
+print(point[1])   # 20
+
+# Tuples are immutable
+# point[0] = 99   # ❌ ERROR
+
+# But you can create a new tuple
+new_point = (99,) + point[1:]
+print(new_point)   # (99, 20)
+
+# Tuple with mixed data
+person = ("Vamsi", 28, "Engineer")
+print(person)
+
+
+✔ Best for fixed data or when you want to use data as a dictionary key (since tuples are hashable, lists are not).

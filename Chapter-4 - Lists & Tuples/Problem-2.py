@@ -1,0 +1,12 @@
+Marks = []
+M1 = int(input("Enter Marks of Subject 1: "))
+Marks.append(M1)
+M2 = int(input("Enter Marks of Subject 2: "))
+Marks.append(M2)
+M3 = int(input("Enter Marks of Subject 3: "))
+Marks.append(M3)
+M4 = int(input("Enter Marks of Subject 4: "))
+Marks.append(M4)
+print(Marks)
+Marks.sort()
+print("Sorted Marks: ", Marks)  
