@@ -1,0 +1,102 @@
+ogging HOWTO
+Author:
+Vinay Sajip <vinay_sajip at red-dove dot com>
+
+This page contains tutorial information. For links to reference information and a logging cookbook, please see Other resources.
+
+Basic Logging Tutorial
+Logging is a means of tracking events that happen when some software runs. The software’s developer adds logging calls to their code to indicate that certain events have occurred. An event is described by a descriptive message which can optionally contain variable data (i.e. data that is potentially different for each occurrence of the event). Events also have an importance which the developer ascribes to the event; the importance can also be called the level or severity.
+
+When to use logging
+You can access logging functionality by creating a logger via logger = logging.getLogger(__name__), and then calling the logger’s debug(), info(), warning(), error() and critical() methods. To determine when to use logging, and to see which logger methods to use when, see the table below. It states, for each of a set of common tasks, the best tool to use for that task.
+
+Task you want to perform
+
+The best tool for the task
+
+Display console output for ordinary usage of a command line script or program
+
+print()
+
+Report events that occur during normal operation of a program (e.g. for status monitoring or fault investigation)
+
+A logger’s info() (or debug() method for very detailed output for diagnostic purposes)
+
+Issue a warning regarding a particular runtime event
+
+warnings.warn() in library code if the issue is avoidable and the client application should be modified to eliminate the warning
+
+A logger’s warning() method if there is nothing the client application can do about the situation, but the event should still be noted
+
+Report an error regarding a particular runtime event
+
+Raise an exception
+
+Report suppression of an error without raising an exception (e.g. error handler in a long-running server process)
+
+A logger’s error(), exception() or critical() method as appropriate for the specific error and application domain
+
+The logger methods are named after the level or severity of the events they are used to track. The standard levels and their applicability are described below (in increasing order of severity):
+
+Level
+
+When it’s used
+
+DEBUG
+
+Detailed information, typically of interest only when diagnosing problems.
+
+INFO
+
+Confirmation that things are working as expected.
+
+WARNING
+
+An indication that something unexpected happened, or indicative of some problem in the near future (e.g. ‘disk space low’). The software is still working as expected.
+
+ERROR
+
+Due to a more serious problem, the software has not been able to perform some function.
+
+CRITICAL
+
+A serious error, indicating that the program itself may be unable to continue running.
+
+The default level is WARNING, which means that only events of this severity and higher will be tracked, unless the logging package is configured to do otherwise.
+
+Events that are tracked can be handled in different ways. The simplest way of handling tracked events is to print them to the console. Another common way is to write them to a disk file.
+
+A simple example
+A very simple example is:
+
+import logging
+logging.warning('Watch out!')  # will print a message to the console
+logging.info('I told you so')  # will not print anything
+If you type these lines into a script and run it, you’ll see:
+
+WARNING:root:Watch out!
+printed out on the console. The INFO message doesn’t appear because the default level is WARNING. The printed message includes the indication of the level and the description of the event provided in the logging call, i.e. ‘Watch out!’. The actual output can be formatted quite flexibly if you need that; formatting options will also be explained later.
+
+Notice that in this example, we use functions directly on the logging module, like logging.debug, rather than creating a logger and calling functions on it. These functions operate on the root logger, but can be useful as they will call basicConfig() for you if it has not been called yet, like in this example. In larger programs you’ll usually want to control the logging configuration explicitly however - so for that reason as well as others, it’s better to create loggers and call their methods.
+
+Logging to a file
+A very common situation is that of recording logging events in a file, so let’s look at that next. Be sure to try the following in a newly started Python interpreter, and don’t just continue from the session described above:
+
+import logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
+logger.debug('This message should go to the log file')
+logger.info('So should this')
+logger.warning('And this, too')
+logger.error('And non-ASCII stuff, too, like Øresund and Malmö')
+Changed in version 3.9: The encoding argument was added. In earlier Python versions, or if not specified, the encoding used is the default value used by open(). While not shown in the above example, an errors argument can also now be passed, which determines how encoding errors are handled. For available values and the default, see the documentation for open().
+
+And now if we open the file and look at what we have, we should find the log messages:
+
+DEBUG:__main__:This message should go to the log file
+INFO:__main__:So should this
+WARNING:__main__:And this, too
+ERROR:__main__:And non-ASCII stuff, too, like Øresund and Malmö
+This example also shows how you can set the logging level which acts as the threshold for tracking. In this case, because we set the threshold to DEBUG, all of the messages were printed.
+
+If you want to set the logging level from a command-line option such as:

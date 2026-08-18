@@ -4,4 +4,3 @@ b = 25
 t1 = print(type(b))
 c = "Vamsi"
 t2 = print(type(c))
-

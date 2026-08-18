@@ -1,4 +1,4 @@
-'''
+'''Write a python program using function to convert Celsius to Fahrenheit. 
 F = (C x 1.8) +32
 '''
 def farh(c):

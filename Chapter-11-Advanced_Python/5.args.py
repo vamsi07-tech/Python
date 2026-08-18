@@ -1,0 +1,5 @@
+def myfunc(*args):
+    for item in args:
+        print(item)
+
+myfunc(40,60,100,1,34)

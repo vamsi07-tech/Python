@@ -1,3 +1,4 @@
+'''Write a program using functions to find greatest of three numbers.'''
 def great(a,b,c):
     if (a>b and a>c):
         print(f"{a} is the greatest")
